@@ -1,6 +1,5 @@
 production:
   adapter: mysql
-  encoding: unicode
   host: <%= ENV['DB_HOST'] %>
   database: <%= ENV['DB_NAME'] %>
   pool: 5
