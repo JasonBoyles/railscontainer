@@ -20,10 +20,27 @@ RUN git clone https://github.com/JasonBoyles/rails-hartl.git && \
     cd rails-hartl && \
     bundle install
 
+# clean this mess up to minimize image size
+
+RUN DEBIAN_FRONTEND=noninteractive apt-get purge -y \
+    libmysqlclient-dev \
+    libpq-dev \
+    libreadline6-dev \
+    zlib1g-dev \
+    libssl-dev \
+    libyaml-dev \
+    libsqlite3-dev \
+    libxml2-dev \
+    libxslt1-dev 
+
+RUN apt-get clean
+RUN rm -rf /var/cache/apt/* && rm -rf /var/lib/apt/lists/*
+
 RUN cd rails-hartl && \
     bundle exec rake assets:precompile
 
 ADD unicorn.conf.rb /rails-hartl/config/unicorn.conf.rb
+ADD database.yml /rails-hartl/config/database.yml
 
 WORKDIR /rails-hartl
 
