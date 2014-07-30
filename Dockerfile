@@ -4,7 +4,7 @@ RUN apt-get update
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install build-essential \
     git-core curl libmysqlclient-dev libpq-dev bison openssl libreadline6  \
     libreadline6-dev zlib1g zlib1g-dev libssl-dev libyaml-dev  \
-    libsqlite3-0 libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev \ 
+    libsqlite3-0 libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev \
     autoconf libc6-dev ssl-cert subversion nodejs
 
 RUN cd /tmp && \
@@ -31,7 +31,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get purge -y \
     libyaml-dev \
     libsqlite3-dev \
     libxml2-dev \
-    libxslt1-dev 
+    libxslt1-dev
 
 RUN apt-get clean
 RUN rm -rf /var/cache/apt/* && rm -rf /var/lib/apt/lists/*
@@ -46,6 +46,6 @@ WORKDIR /rails-hartl
 
 EXPOSE 8080
 
-ENTRYPOINT bundle exec unicorn -c config/unicorn.conf.rb --env production 
+ENV RAILS_ENV production
 
-
+ENTRYPOINT bundle exec rake db:migrate && bundle exec unicorn -c config/unicorn.conf.rb
