@@ -10,9 +10,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -y install build-essential \
 RUN cd /tmp && \
     git clone https://github.com/sstephenson/ruby-build.git && \
     cd ruby-build && \
-    ./install.sh
-
-RUN /usr/local/bin/ruby-build 2.1.2 /usr/local/
+    ./install.sh && \
+    /usr/local/bin/ruby-build 2.1.2 /usr/local/
 
 RUN gem install bundler
 
